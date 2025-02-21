@@ -1,0 +1,69 @@
+header{
+    width: 100%;
+    height: 200px;
+    background-color:#344e41;
+}
+body{
+    padding: 10px;
+    margin:0px;
+    background-color: #dee2d6;
+}
+#container-banners{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 50px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #dee2d6;
+}
+#banner{
+    width: 20%;
+    height: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #588157;
+}
+#container-banners2{
+    display: flex;
+    width: 100%;
+    height: 500px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+#banner-esquerda{
+    width: 49%;
+    height: 500px;
+    left: 0;
+    position: relative;
+    background-color: #588157;
+}
+#banner-direita{
+    width: 49%;
+    height: 500px;
+    right: 10px;
+    position: absolute;
+    background-color: #588157;
+}
+footer{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 45px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+#banner-rodape{
+    width: 40%;
+    height: 45px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #a3b18a;
+}
+#banner-rodape2{
+    width: 20%;
+    height: 45px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #a3b18a;
+}
