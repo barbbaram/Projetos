@@ -1,0 +1,50 @@
+function organizarArquivos() {
+  var form = FormApp.openById("128xgxv3_TFkqbmj-Say0p5NI8SmFwev3OnG6BSiGKnA");
+  var responses = form.getResponses();
+  var folder = DriveApp.getFolderById("1l6Q0TWZ9A5Xp_rn0HP0XBj9VT_2O_92i3EJQW67rBCCll48qLd0jpFeief1PXXd1mhYCvGUm");
+
+  for (var i = 0; i < responses.length; i++) {
+    var response = responses[i];
+    var email = response.getRespondentEmail();
+    var timestamp = response.getTimestamp(); // Obtém a data e hora exata do envio
+
+    // Formatar a data do envio: "DD-MM-YYYY_HH-MM"
+    var formattedDate = Utilities.formatDate(timestamp, Session.getScriptTimeZone(), "dd-MM-yyyy_HH-mm");
+    var folderName = email + "_" + formattedDate; // Nome da pasta
+
+    // Verificar se a pasta já existe
+    var folders = folder.getFoldersByName(folderName);
+    var userFolder;
+
+    if (folders.hasNext()) {
+      // Se a pasta já existir, usa a existente
+      userFolder = folders.next();
+    } else {
+      // Caso contrário, cria a pasta
+      userFolder = folder.createFolder(folderName);
+    }
+
+    // Processar os arquivos enviados
+    var itemResponses = response.getItemResponses();
+    for (var j = 0; j < itemResponses.length; j++) {
+      var itemResponse = itemResponses[j];
+
+      // Verifica se a resposta é do tipo Upload de Arquivo
+      if (itemResponse.getItem().getType() == FormApp.ItemType.FILE_UPLOAD) {
+        var fileIds = itemResponse.getResponse(); // Pode ser um único ID ou uma lista de IDs
+
+        if (typeof fileIds === "string") {
+          // Se for um único arquivo, mover diretamente
+          var file = DriveApp.getFileById(fileIds);
+          file.moveTo(userFolder);
+        } else if (Array.isArray(fileIds)) {
+          // Se for uma lista de arquivos, mover cada um deles
+          for (var k = 0; k < fileIds.length; k++) {
+            var file = DriveApp.getFileById(fileIds[k]);
+            file.moveTo(userFolder);
+          }
+        }
+      }
+    }
+  }
+}
